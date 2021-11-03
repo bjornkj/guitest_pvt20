@@ -1,7 +1,9 @@
 import time
 
 import pytest
+from datetime import datetime
 from selenium import webdriver
+
 
 from chalmers_pages import ChalmersMainPage, ChalmersUtbildning, ChalmersITProgram, ChalmersProgramGrundniva
 
