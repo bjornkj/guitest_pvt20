@@ -2,6 +2,7 @@ import time
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from typing import Union
@@ -12,6 +13,12 @@ class KyhPage:
 
     def __init__(self, driver):
         self.driver = driver
+
+    def page_up(self):
+        self.driver.find_element(By.TAG_NAME, "html").send_keys(Keys.PAGE_UP)
+
+    def page_down(self):
+        self.driver.find_element(By.TAG_NAME, "html").send_keys(Keys.PAGE_DOWN)
 
 
 class MainPage(KyhPage):
