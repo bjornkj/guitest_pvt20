@@ -48,7 +48,8 @@ class PvtPage(KyhPage):
 
     @property
     def ort(self) -> str:
-        return self.driver.find_element(By.XPATH, '//*[@id="content"]/section[2]/section[1]/div[2]/div[2]/ul/li[1]/span').text
+        element = self.driver.find_element(By.XPATH, '//*[@id="content"]/section[2]/section[1]/div[2]/div[2]/ul/li[1]/span')
+        return element.text
 
 
 

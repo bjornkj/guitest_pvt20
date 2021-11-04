@@ -23,9 +23,25 @@ def pytest_runtest_makereport(item):
             # För att ta en skärmdump måste vi få tag på en referns till webdrivern som används i testet
             # i våra tester får vi wedrivern som ett argument kallat browser
             browser = item.funcargs['browser']
+            #print(browser.last_element)
+            highlight(browser.last_element, "red", 5)
             browser.save_screenshot(html_report_path + file_name)
             extra.append(pytest_html.extras.html(create_img_tag(file_name)))
         report.extra = extra
+
+def highlight(element, color, border):
+    """Highlights (blinks) a Selenium Webdriver element"""
+    driver = element._parent
+    def apply_style(s):
+        driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
+                              element, s)
+    original_style = element.get_attribute('style')
+    apply_style("border: {0}px solid {1};".format(border, color))
+    #time.sleep(effect_time)
+    #apply_style(original_style)
+
+
+
 
 
 def create_img_tag(file_path):

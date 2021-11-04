@@ -1,14 +1,25 @@
 import time
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from kyh_pages import MainPage, VaraUtbildningar, PvtPage
 import pytest
 from datetime import datetime, timedelta
 
 
+class ChromeWithMem(webdriver.Chrome):
+    last_element: object
+
+    def find_element(self, *args, **kwargs):
+        self.last_element = super(webdriver.Chrome, self).find_element(*args, **kwargs)
+        return self.last_element
+
+
+
 @pytest.fixture(scope="module")
 def browser():
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    driver = ChromeWithMem()
     driver.set_window_size(1920, 1080)
     driver.get("https://kyh.se/foo")
     driver.add_cookie(
@@ -43,4 +54,5 @@ def test_pvt_utb_len(browser):
 def test_pvt_utb_ort(browser):
     browser.get("https://kyh.se/utbildningar/teknisk-testare/")
     pvt_page = PvtPage(browser)
+    pvt_page.page_down()
     assert pvt_page.ort == "asdfas"
