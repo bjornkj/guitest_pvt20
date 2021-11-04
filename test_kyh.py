@@ -3,12 +3,18 @@ import time
 from selenium import webdriver
 from kyh_pages import MainPage, VaraUtbildningar, PvtPage
 import pytest
+from datetime import datetime, timedelta
 
 
 @pytest.fixture(scope="module")
 def browser():
     driver = webdriver.Chrome()
     driver.set_window_size(1920, 1080)
+    driver.get("https://kyh.se/foo")
+    driver.add_cookie(
+        {'domain': 'kyh.se', 'expiry': int((datetime.today() + timedelta(weeks=4)).timestamp()),
+         'httpOnly': False, 'name': 'cookie_notice_accepted', 'path': '/',
+         'secure': True, 'value': 'true'})
     yield driver
     driver.quit()
 
