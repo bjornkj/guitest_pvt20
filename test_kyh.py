@@ -19,7 +19,8 @@ class ChromeWithMem(webdriver.Chrome):
 @pytest.fixture(scope="module")
 def browser():
     chrome_options = Options()
-    driver = ChromeWithMem()
+    chrome_options.add_argument("--headless")
+    driver = ChromeWithMem(options=chrome_options)
     driver.set_window_size(1920, 1080)
     driver.get("https://kyh.se/foo")
     driver.add_cookie(

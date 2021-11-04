@@ -1,15 +1,13 @@
-import time
-
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
-from typing import Union
+from selenium.webdriver.remote.webdriver import WebDriver
 
 
 class KyhPage:
-    driver: Union[webdriver.Chrome, webdriver.Firefox, webdriver.Edge]
+    driver: WebDriver
 
     def __init__(self, driver):
         self.driver = driver
@@ -32,25 +30,25 @@ class MainPage(KyhPage):
 class VaraUtbildningar(KyhPage):
     def click_gbg(self):
         wait = WebDriverWait(self.driver, 10)
-        button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Göteborg')]")))
+        button = wait.until(ec.element_to_be_clickable((By.XPATH, "//button[contains(., 'Göteborg')]")))
         button.click()
 
     def click_pvt(self):
         wait = WebDriverWait(self.driver, 10)
-        link = wait.until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Programvarutestare")))
+        link = wait.until(ec.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Programvarutestare")))
         link.click()
 
 
 class PvtPage(KyhPage):
     @property
     def antal_ar(self) -> str:
-        return self.driver.find_element(By.XPATH, '//*[@id="content"]/section[2]/section[1]/div[2]/div[2]/ul/li[2]/span').text
+        return self.driver.find_element(By.XPATH,
+                                        "//*[@id=\"content\"]/section[2]/section[1]/div[2]/div[2]/ul/li[2]/span").text
 
     @property
     def ort(self) -> str:
-        element = self.driver.find_element(By.XPATH, '//*[@id="content"]/section[2]/section[1]/div[2]/div[2]/ul/li[1]/span')
-        return element.text
-
+        return self.driver.find_element(By.XPATH,
+                                        "//*[@id=\"content\"]/section[2]/section[1]/div[2]/div[2]/ul/li[1]/span").text
 
 
 def main():
