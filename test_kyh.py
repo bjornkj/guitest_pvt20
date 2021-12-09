@@ -55,5 +55,4 @@ def test_pvt_utb_len(browser):
 def test_pvt_utb_ort(browser):
     browser.get("https://kyh.se/utbildningar/teknisk-testare/")
     pvt_page = PvtPage(browser)
-    pvt_page.page_down()
     assert pvt_page.ort == "asdfas"

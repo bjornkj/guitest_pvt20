@@ -37,5 +37,43 @@ def set_cookie():
     time.sleep(5)
 
 
+
+
+class Person:
+    first_name: str
+    last_name: str
+    age: int
+
+    def __init__(self, first_name: str, last_name: str, age: int):
+        self._first_name = first_name
+        self.last_name = last_name
+        self.age = age
+
+    @property
+    def name(self):
+        return f"{self._first_name} {self.last_name}"
+
+    @property
+    def first_name(self):
+        return self._first_name
+
+    @first_name.setter
+    def first_name(self, first_name):
+        if first_name == "":
+            raise ValueError("Empty first name not allowed")
+        self._first_name = first_name
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    set_cookie()
+    p = Person("Björn", "Kjellgren", 40)
+    print(p.name)
+    print(p.first_name)
+    print(p.age)
+
+    p.first_name = ""
+    print(p.name)
